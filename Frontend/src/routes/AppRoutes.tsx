@@ -21,18 +21,7 @@ import { EmployeeDocumentsPage } from '../pages/employee/EmployeeDocumentsPage.j
 import { EmployeeProfilePage } from '../pages/employee/EmployeeProfilePage.js';
 import { EmployeeSecurityPage } from '../pages/employee/EmployeeSecurityPage.js';
 
-// HR Pages
-import { HRDashboardPage } from '../pages/hr/HRDashboardPage.js';
-import { HREmployeesPage } from '../pages/hr/HREmployeesPage.js';
-import { HREmployeeDetailPage } from '../pages/hr/HREmployeeDetailPage.js';
-import { HRAttendancePage } from '../pages/hr/HRAttendancePage.js';
-import { HRLeavePage } from '../pages/hr/HRLeavePage.js';
-import { HRExceptionsPage } from '../pages/hr/HRExceptionsPage.js';
-import { HRAuditPage } from '../pages/hr/HRAuditPage.js';
-import { HRSecurityPage } from '../pages/hr/HRSecurityPage.js';
-import { HRSettingsPage } from '../pages/hr/HRSettingsPage.js';
-
-const ProtectedLayout: React.FC<{ allowedRoles?: Array<'EMPLOYEE' | 'HR'> }> = ({ allowedRoles }) => {
+const EmployeeProtectedLayout: React.FC = () => {
   const { user, isLoading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -46,10 +35,6 @@ const ProtectedLayout: React.FC<{ allowedRoles?: Array<'EMPLOYEE' | 'HR'> }> = (
 
   if (!user) {
     return <Navigate to="/login" replace />;
-  }
-
-  if (allowedRoles && !allowedRoles.includes(user.role)) {
-    return <Navigate to={user.role === 'HR' ? '/hr/dashboard' : '/employee/dashboard'} replace />;
   }
 
   return (
@@ -83,7 +68,7 @@ export const AppRoutes: React.FC = () => {
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
       {/* Employee Protected Routes */}
-      <Route element={<ProtectedLayout allowedRoles={['EMPLOYEE']} />}>
+      <Route element={<EmployeeProtectedLayout />}>
         <Route path="/employee/dashboard" element={<EmployeeDashboardPage />} />
         <Route path="/employee/attendance" element={<EmployeeAttendancePage />} />
         <Route path="/employee/leave" element={<EmployeeLeavePage />} />
@@ -92,20 +77,6 @@ export const AppRoutes: React.FC = () => {
         <Route path="/employee/profile" element={<EmployeeProfilePage />} />
         <Route path="/employee/security" element={<EmployeeSecurityPage />} />
         <Route path="/employee" element={<Navigate to="/employee/dashboard" replace />} />
-      </Route>
-
-      {/* HR Protected Routes */}
-      <Route element={<ProtectedLayout allowedRoles={['HR']} />}>
-        <Route path="/hr/dashboard" element={<HRDashboardPage />} />
-        <Route path="/hr/employees" element={<HREmployeesPage />} />
-        <Route path="/hr/employees/:employeeId" element={<HREmployeeDetailPage />} />
-        <Route path="/hr/attendance" element={<HRAttendancePage />} />
-        <Route path="/hr/leave" element={<HRLeavePage />} />
-        <Route path="/hr/exceptions" element={<HRExceptionsPage />} />
-        <Route path="/hr/audit" element={<HRAuditPage />} />
-        <Route path="/hr/security" element={<HRSecurityPage />} />
-        <Route path="/hr/settings" element={<HRSettingsPage />} />
-        <Route path="/hr" element={<Navigate to="/hr/dashboard" replace />} />
       </Route>
 
       {/* Catch-all redirect */}

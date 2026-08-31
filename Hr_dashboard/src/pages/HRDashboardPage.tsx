@@ -21,6 +21,16 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+
+const ResponsiveContainerAny = ResponsiveContainer as any;
+const BarChartAny = BarChart as any;
+const CartesianGridAny = CartesianGrid as any;
+const XAxisAny = XAxis as any;
+const YAxisAny = YAxis as any;
+const TooltipAny = Tooltip as any;
+const LegendAny = Legend as any;
+const BarAny = Bar as any;
+
 import { apiRequest } from '../services/api.js';
 import { HRDashboardData, HRInsightsResponse } from '../types/index.js';
 import { KpiCard } from '../components/common/KpiCard.js';
@@ -201,13 +211,13 @@ export const HRDashboardPage: React.FC = () => {
           </div>
 
           <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data.trend7Days}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
-                <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} />
-                <Tooltip
-                  content={({ active, payload }) => {
+            <ResponsiveContainerAny width="100%" height="100%">
+              <BarChartAny data={data.trend7Days}>
+                <CartesianGridAny strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
+                <XAxisAny dataKey="date" stroke="#94a3b8" fontSize={11} tickLine={false} />
+                <YAxisAny stroke="#94a3b8" fontSize={11} tickLine={false} />
+                <TooltipAny
+                  content={({ active, payload }: any) => {
                     if (active && payload && payload.length) {
                       const d = payload[0].payload;
                       return (
@@ -222,11 +232,11 @@ export const HRDashboardPage: React.FC = () => {
                     return null;
                   }}
                 />
-                <Legend />
-                <Bar dataKey="present" fill="#0f172a" radius={[4, 4, 0, 0]} name="Present" />
-                <Bar dataKey="late" fill="#d97706" radius={[4, 4, 0, 0]} name="Late Arrivals" />
-              </BarChart>
-            </ResponsiveContainer>
+                <LegendAny />
+                <BarAny dataKey="present" fill="#0f172a" radius={[4, 4, 0, 0]} name="Present" />
+                <BarAny dataKey="late" fill="#d97706" radius={[4, 4, 0, 0]} name="Late Arrivals" />
+              </BarChartAny>
+            </ResponsiveContainerAny>
           </div>
         </div>
 

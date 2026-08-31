@@ -1,0 +1,24 @@
+[
+  {
+    "hrUserId": "HR-ADMIN-01",
+    "legalName": "Elena Vance",
+    "workEmail": "hr.admin@company.local",
+    "username": "hradmin",
+    "role": "HR",
+    "department": "Human Resources & People Ops",
+    "designation": "Chief People Officer & Lead Administrator",
+    "mfaEnabled": false,
+    "status": "ACTIVE"
+  },
+  {
+    "hrUserId": "HR-MGR-02",
+    "legalName": "Marcus Sterling",
+    "workEmail": "marcus.sterling@company.local",
+    "username": "marcus_hr",
+    "role": "HR",
+    "department": "People Operations",
+    "designation": "Senior HR Operations Manager",
+    "mfaEnabled": false,
+    "status": "ACTIVE"
+  }
+]

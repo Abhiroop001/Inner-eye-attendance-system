@@ -1,0 +1,41 @@
+[
+  {
+    "scheduleId": "SCH-GEN-01",
+    "name": "Standard General Shift (9 AM - 5 PM)",
+    "timezone": "Asia/Kolkata",
+    "expectedStartTime": "09:00",
+    "expectedEndTime": "17:00",
+    "graceMinutes": 15,
+    "unpaidBreakMinutes": 60,
+    "minimumWorkingMinutes": 420,
+    "weeklyPattern": [1, 2, 3, 4, 5],
+    "holidayCalendarId": "CAL-IN-2026",
+    "isDefault": true
+  },
+  {
+    "scheduleId": "SCH-OPS-01",
+    "name": "Early Morning Operations Shift (6 AM - 2 PM)",
+    "timezone": "Asia/Kolkata",
+    "expectedStartTime": "06:00",
+    "expectedEndTime": "14:00",
+    "graceMinutes": 10,
+    "unpaidBreakMinutes": 45,
+    "minimumWorkingMinutes": 420,
+    "weeklyPattern": [1, 2, 3, 4, 5],
+    "holidayCalendarId": "CAL-IN-2026",
+    "isDefault": false
+  },
+  {
+    "scheduleId": "SCH-FLEX-01",
+    "name": "Flexible Product Core Shift (10 AM - 6 PM)",
+    "timezone": "Asia/Kolkata",
+    "expectedStartTime": "10:00",
+    "expectedEndTime": "18:00",
+    "graceMinutes": 20,
+    "unpaidBreakMinutes": 60,
+    "minimumWorkingMinutes": 420,
+    "weeklyPattern": [1, 2, 3, 4, 5],
+    "holidayCalendarId": "CAL-IN-2026",
+    "isDefault": false
+  }
+]

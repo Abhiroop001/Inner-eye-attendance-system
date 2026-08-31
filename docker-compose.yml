@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: iecsl-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: attendance_system
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - iecsl-network
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: iecsl-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - iecsl-network
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.api
+    container_name: iecsl-api
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/attendance_system
+      - REDIS_URL=redis://redis:6379
+      - JWT_ACCESS_SECRET=docker-production-super-secret-jwt-key-minimum-32-chars-long
+      - JWT_REFRESH_SECRET=docker-production-super-secret-refresh-key-minimum-32-chars
+      - MFA_ENCRYPTION_KEY=0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - HF_API_KEY=${HF_API_KEY}
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - iecsl-network
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.web
+    container_name: iecsl-web
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+    networks:
+      - iecsl-network
+
+networks:
+  iecsl-network:
+    driver: bridge
+
+volumes:
+  mongo_data:
+  redis_data:

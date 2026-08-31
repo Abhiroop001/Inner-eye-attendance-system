@@ -1,0 +1,30 @@
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy root workspace and package files
+COPY package*.json ./
+COPY backend/package*.json ./backend/
+
+RUN npm install --workspace=backend --legacy-peer-deps
+
+COPY backend/ ./backend/
+RUN npm run build --workspace=backend
+
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY package*.json ./
+COPY backend/package*.json ./backend/
+
+RUN npm install --workspace=backend --omit=dev --legacy-peer-deps
+
+COPY --from=builder /app/backend/dist ./backend/dist
+COPY --from=builder /app/backend/src/scripts ./backend/dist/scripts
+COPY rag/ ./rag/
+
+EXPOSE 5000
+
+CMD ["node", "backend/dist/server.js"]

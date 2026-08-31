@@ -1,0 +1,34 @@
+{
+  "name": "employee-attendance-system",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "Frontend",
+    "Hr_dashboard",
+    "backend"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=Frontend",
+    "dev:hr": "npm run dev --workspace=Hr_dashboard",
+    "build:backend": "npm run build --workspace=backend",
+    "build:frontend": "npm run build --workspace=Frontend",
+    "build:hr": "npm run build --workspace=Hr_dashboard",
+    "build": "npm run build:backend && npm run build:frontend && npm run build:hr",
+    "seed": "npm run seed --workspace=backend",
+    "rag:ingest": "npm run rag:ingest --workspace=backend",
+    "rag:evaluate": "npm run rag:evaluate --workspace=backend",
+    "test": "npm run test --workspace=backend"
+  },
+  "keywords": [
+    "mern",
+    "langgraph",
+    "groq",
+    "redis",
+    "mongodb-vector-search",
+    "attendance",
+    "security-first"
+  ],
+  "author": "Enterprise Security Engineering Team",
+  "license": "ISC"
+}

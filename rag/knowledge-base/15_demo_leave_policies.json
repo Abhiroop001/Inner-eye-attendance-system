@@ -1,0 +1,40 @@
+[
+  {
+    "leavePolicyId": "POL-LEAVE-STD",
+    "name": "Standard Full-Time Employee Leave Policy",
+    "description": "Standard corporate leave entitlement covering Casual, Sick, Emergency, and Statutory leaves.",
+    "leaveTypes": [
+      {
+        "type": "CASUAL",
+        "name": "Casual / Privilege Leave",
+        "annualQuota": 18,
+        "accrualFrequency": "QUARTERLY",
+        "maxConsecutiveDays": 4,
+        "carryForwardLimit": 10,
+        "requiresDocument": false
+      },
+      {
+        "type": "SICK",
+        "name": "Sick / Medical Leave",
+        "annualQuota": 12,
+        "accrualFrequency": "ANNUAL",
+        "maxConsecutiveDays": 10,
+        "carryForwardLimit": 0,
+        "requiresDocument": true,
+        "documentThresholdDays": 2
+      },
+      {
+        "type": "EMERGENCY",
+        "name": "Emergency Leave",
+        "annualQuota": 5,
+        "accrualFrequency": "ANNUAL",
+        "maxConsecutiveDays": 2,
+        "carryForwardLimit": 0,
+        "requiresDocument": false
+      }
+    ],
+    "excludeHolidays": true,
+    "excludeWeekends": true,
+    "allowHalfDay": true
+  }
+]

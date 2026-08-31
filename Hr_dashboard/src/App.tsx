@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Analytics } from '@vercel/analytics/react';
 import { AuthProvider } from './context/AuthContext.js';
 import { AppRoutes } from './routes/AppRoutes.js';
 
@@ -25,6 +26,7 @@ export const App: React.FC = () => {
       >
         <AuthProvider>
           <AppRoutes />
+          <Analytics />
         </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>

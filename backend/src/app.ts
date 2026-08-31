@@ -32,17 +32,28 @@ app.use(
   })
 );
 
-// Explicit CORS Configuration
+// Explicit CORS Configuration with Vercel and Local Support
 app.use(
   cors({
-    origin: [
-      env.WEB_URL,
-      'http://localhost:5173',
-      'http://127.0.0.1:5173',
-      'http://localhost:5174',
-      'http://127.0.0.1:5174',
-      'http://localhost:3000',
-    ],
+    origin: (requestOrigin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, or server-to-server)
+      if (!requestOrigin) return callback(null, true);
+
+      const staticAllowed = [
+        env.WEB_URL,
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+        'http://localhost:5174',
+        'http://127.0.0.1:5174',
+        'http://localhost:3000',
+      ];
+
+      if (staticAllowed.includes(requestOrigin) || requestOrigin.endsWith('.vercel.app')) {
+        return callback(null, true);
+      }
+
+      return callback(null, true);
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Request-ID'],

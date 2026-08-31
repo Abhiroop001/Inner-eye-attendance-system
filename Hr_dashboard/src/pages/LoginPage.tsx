@@ -172,8 +172,11 @@ export const LoginPage: React.FC = () => {
 
           <div className="mt-6 border-t border-slate-800 pt-4 text-center text-xs text-slate-500">
             <span>Employee Self-Service? </span>
-            <a href="http://localhost:5173" className="font-bold text-amber-400 hover:underline">
-              Open Employee Portal (Port 5173)
+            <a
+              href={(import.meta as any).env?.VITE_EMPLOYEE_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5173/login' : 'https://inner-eye-attendance-system-fronten-iota.vercel.app/login')}
+              className="font-bold text-amber-400 hover:underline"
+            >
+              Open Employee Portal
             </a>
           </div>
         </div>

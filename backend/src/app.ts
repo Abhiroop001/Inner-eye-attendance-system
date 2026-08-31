@@ -41,6 +41,9 @@ app.use(
 
       const staticAllowed = [
         env.WEB_URL,
+        env.HR_WEB_URL,
+        'https://inner-eye-attendance-system-fronten-iota.vercel.app',
+        'https://inner-eye-attendance-system-hr-dash.vercel.app',
         'http://localhost:5173',
         'http://127.0.0.1:5173',
         'http://localhost:5174',

@@ -11,6 +11,7 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(5000),
   APP_URL: z.string().default('http://localhost:5000'),
   WEB_URL: z.string().default('http://localhost:5173'),
+  HR_WEB_URL: z.string().default('http://localhost:5174'),
   API_URL: z.string().default('http://localhost:5000/api'),
 
   MONGODB_URI: z.string().default('mongodb://127.0.0.1:27017/attendance_db?directConnection=true'),

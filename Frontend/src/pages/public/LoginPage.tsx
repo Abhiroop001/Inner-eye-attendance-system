@@ -235,10 +235,10 @@ export const LoginPage: React.FC = () => {
           <div className="mt-6 border-t border-slate-100 pt-4 text-center text-xs text-slate-500">
             <span className="block sm:inline">Human Resources Administrator? </span>
             <a
-              href="http://localhost:5174/login"
+              href={(import.meta as any).env?.VITE_HR_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5174/login' : 'https://inner-eye-attendance-system-hr-dash.vercel.app/login')}
               className="font-bold text-amber-700 hover:text-amber-900 hover:underline inline-flex items-center gap-1"
             >
-              <span>Access HR Console (Port 5174)</span>
+              <span>Access HR Operations Console</span>
               <ArrowRight className="h-3 w-3" />
             </a>
           </div>

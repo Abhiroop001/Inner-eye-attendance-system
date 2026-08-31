@@ -17,6 +17,7 @@ const envSchema = z.object({
   MONGODB_DB_NAME: z.string().default('attendance_db'),
 
   REDIS_URL: z.string().default('redis://127.0.0.1:6379'),
+  REDIS_TOKEN: z.string().optional().default(''),
 
   GROQ_API_KEY: z.string().optional().default(''),
   GROQ_MODEL: z.string().default('llama-3.3-70b-versatile'),

@@ -85,7 +85,15 @@ export async function apiRequest<T = any>(
     }
   }
 
-  const json: ApiResponse<T> = await response.json();
+  let json: ApiResponse<T>;
+  try {
+    json = await response.json();
+  } catch (parseErr) {
+    const err = new Error(`Server returned HTTP ${response.status}: Unable to parse JSON response.`) as any;
+    err.code = 'PARSE_ERROR';
+    err.status = response.status;
+    throw err;
+  }
 
   if (!response.ok || !json.success) {
     const errorMsg = json.error?.message || `HTTP Request failed with status ${response.status}`;

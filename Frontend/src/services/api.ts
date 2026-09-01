@@ -1,4 +1,8 @@
-const API_BASE_URL = (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/$/, '') : '') + '/api';
+const API_BASE_URL = ((import.meta as any).env?.VITE_API_URL
+  ? (import.meta as any).env.VITE_API_URL.replace(/\/$/, '')
+  : (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && !window.location.hostname.includes('127.0.0.1')
+    ? 'https://inner-eye-attendance-system.onrender.com'
+    : '')) + '/api';
 
 let accessToken: string | null = localStorage.getItem('access_token');
 

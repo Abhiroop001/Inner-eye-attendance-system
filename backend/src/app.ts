@@ -70,6 +70,25 @@ app.use(express.urlencoded({ extended: true, limit: '2mb' }));
 // Correlation ID and Request Context
 app.use(requestContextMiddleware);
 
+// Root Gateway & Monitoring Health Endpoints (Supports GET & HEAD)
+app.get(['/', '/health'], (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Enterprise Attendance Management System API Gateway is Live & Operational',
+    service: 'enterprise-attendance-backend',
+    status: 'healthy',
+    timestamp: new Date().toISOString(),
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      employee: '/api/me',
+      hr: '/api/hr',
+      ai: '/api/ai',
+    },
+  });
+});
+
 // API Route Mount Points
 app.use('/api/auth', authRoutes);
 app.use('/api/registration', registrationRoutes);

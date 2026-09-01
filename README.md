@@ -60,36 +60,36 @@ The System Context Diagram illustrates the boundary of the Enterprise Attendance
 
 ```mermaid
 graph TB
-    subgraph PrimaryActors [Human Actors]
-        EMP["Employee (Workforce)"]
+    subgraph PrimaryActors ["Human Actors"]
+        EMP["Employee - Workforce"]
         HR["HR Administrator / Compliance Officer"]
         SEC["Security Auditor"]
     end
 
-    subgraph CoreBoundary [Enterprise Attendance System Boundary]
-        PORTAL["Employee Self-Service Portal<br/>(React 18 / Vite)"]
-        CONSOLE["HR Operations Console<br/>(React 18 / Vite)"]
-        BACKEND["Express API Gateway & Logic Layer<br/>(Node.js / TypeScript)"]
+    subgraph CoreBoundary ["Enterprise Attendance System Boundary"]
+        PORTAL["Employee Self-Service Portal<br/>React 18 / Vite"]
+        CONSOLE["HR Operations Console<br/>React 18 / Vite"]
+        BACKEND["Express API Gateway and Logic Layer<br/>Node.js / TypeScript"]
     end
 
-    subgraph ExternalSystems [External Services & Data Infrastructure]
-        MONGO[("MongoDB Atlas<br/>Operational DB & Vector Store")]
-        REDIS[("Upstash Redis<br/>Rate Limiter & TLS Cache")]
-        GROQ["Groq Cloud AI<br/>(Llama 3.3 70B / GPT-OSS 120B)"]
-        HF["Hugging Face API<br/>(Feature Extraction & Embeddings)"]
+    subgraph ExternalSystems ["External Services and Data Infrastructure"]
+        MONGO[("MongoDB Atlas<br/>Operational DB and Vector Store")]
+        REDIS[("Upstash Redis<br/>Rate Limiter and TLS Cache")]
+        GROQ["Groq Cloud AI<br/>Llama 3.3 70B / GPT-OSS 120B"]
+        HF["Hugging Face API<br/>Feature Extraction and Embeddings"]
     end
 
-    EMP -->|HTTPS / REST| PORTAL
-    HR -->|HTTPS / REST| CONSOLE
-    SEC -->|Audit Inspection| CONSOLE
+    EMP -->|"HTTPS / REST"| PORTAL
+    HR -->|"HTTPS / REST"| CONSOLE
+    SEC -->|"Audit Inspection"| CONSOLE
 
-    PORTAL -->|Session & API Calls| BACKEND
-    CONSOLE -->|Administrative REST| BACKEND
+    PORTAL -->|"Session & API Calls"| BACKEND
+    CONSOLE -->|"Administrative REST"| BACKEND
 
-    BACKEND -->|Mongoose / Vector Search| MONGO
-    BACKEND -->|ioredis / Cache & Rate Limit| REDIS
-    BACKEND -->|Agentic RAG Inference| GROQ
-    BACKEND -->|Dense Vector Embeddings| HF
+    BACKEND -->|"Mongoose / Vector Search"| MONGO
+    BACKEND -->|"ioredis / Cache & Rate Limit"| REDIS
+    BACKEND -->|"Agentic RAG Inference"| GROQ
+    BACKEND -->|"Dense Vector Embeddings"| HF
 ```
 
 ---
@@ -100,24 +100,24 @@ Defines functional capabilities categorized by actor role across authentication,
 
 ```mermaid
 flowchart LR
-    subgraph Actors [Actors]
+    subgraph Actors ["Actors"]
         EmployeeActor["Employee"]
         HRActor["HR Admin"]
         SystemActor["AI Agent & Cron"]
     end
 
-    subgraph AttendanceSystem [Enterprise Attendance System]
+    subgraph AttendanceSystem ["Enterprise Attendance System"]
         UC1["Self-Registration Request"]
-        UC2["Multi-Factor Login (TOTP)"]
-        UC3["Clock In / Clock Out (Session Management)"]
+        UC2["Multi-Factor Login - TOTP"]
+        UC3["Clock In / Clock Out Session"]
         UC4["View Personal Attendance & Hours"]
         UC5["Apply for Leave & Check Balance"]
         UC6["Submit Late Explanation & Upload Proof"]
-        UC7["Query AI Policy Assistant (RAG)"]
+        UC7["Query AI Policy Assistant RAG"]
         
         UC8["Approve / Reject Registration"]
         UC9["Live Presence Telemetry Dashboard"]
-        UC10["Adjudicate Exceptions (AI-Assisted)"]
+        UC10["Adjudicate Exceptions - AI Assisted"]
         UC11["Process Leave Applications"]
         UC12["Inspect Immutable Audit Trail"]
         UC13["Flush Distributed Redis Cache"]
@@ -158,15 +158,15 @@ Illustrates the single system transformation process, showing environmental inpu
 
 ```mermaid
 flowchart TD
-    E[Employee] -->|Registration Info, Punch Events, Leave Requests, Explanations| P0((0. Enterprise Attendance Management System))
-    HR[HR Administrator] -->|Approvals, Adjudications, Policy Configurations, Cache Commands| P0
+    E["Employee"] -->|"Registration Info, Punch Events, Leave Requests, Explanations"| P0(("0. Enterprise Attendance Management System"))
+    HR["HR Administrator"] -->|"Approvals, Adjudications, Policy Configurations, Cache Commands"| P0
     
-    P0 -->|Session Tokens, Punch Status, Leave Balances, AI Policy Answers| E
-    P0 -->|Workforce Telemetry, Exceptions Queue, Audit Trail, Summary Reports| HR
+    P0 -->|"Session Tokens, Punch Status, Leave Balances, AI Policy Answers"| E
+    P0 -->|"Workforce Telemetry, Exceptions Queue, Audit Trail, Summary Reports"| HR
 
-    P0 <-->|CRUD Operations & Vector Search Queries| DS1[(MongoDB Atlas Database)]
-    P0 <-->|Token Blacklist, Sliding Rate Limits, Cached Aggregations| DS2[(Redis Distributed Cache)]
-    P0 <-->|Embeddings & LLM Inference Payloads| EXT[Groq & HuggingFace AI]
+    P0 <-->|"CRUD Operations and Vector Search Queries"| DS1[("MongoDB Atlas Database")]
+    P0 <-->|"Token Blacklist, Sliding Rate Limits, Cached Aggregations"| DS2[("Redis Distributed Cache")]
+    P0 <-->|"Embeddings and LLM Inference Payloads"| EXT["Groq and HuggingFace AI"]
 ```
 
 ---
@@ -177,59 +177,59 @@ Decomposes the core system into seven distinct operational subsystems.
 
 ```mermaid
 flowchart TB
-    EMP[Employee]
-    HR[HR Administrator]
+    EMP["Employee"]
+    HR["HR Administrator"]
 
-    subgraph Processes [Subsystem Processes]
-        P1["1.0 Identity & Registration Service"]
-        P2["2.0 Authentication & Session Engine"]
-        P3["3.0 Attendance & Working Session Tracker"]
-        P4["4.0 Exception & Late Reason Adjudicator"]
+    subgraph Processes ["Subsystem Processes"]
+        P1["1.0 Identity and Registration Service"]
+        P2["2.0 Authentication and Session Engine"]
+        P3["3.0 Attendance and Working Session Tracker"]
+        P4["4.0 Exception and Late Reason Adjudicator"]
         P5["5.0 Leave Entitlement Engine"]
         P6["6.0 LangGraph Policy RAG Agent"]
-        P7["7.0 Audit & Compliance Logger"]
+        P7["7.0 Audit and Compliance Logger"]
     end
 
-    subgraph DataStores [Data Stores]
-        D1[("D1: User Accounts & Credentials")]
-        D2[("D2: Employees & Digital Twins")]
-        D3[("D3: Attendance & Punch Events")]
-        D4[("D4: Exceptions & Document Vault")]
-        D5[("D5: Leave Ledgers & Quotas")]
-        D6[("D6: Vector Embeddings & Policies")]
+    subgraph DataStores ["Data Stores"]
+        D1[("D1: User Accounts and Credentials")]
+        D2[("D2: Employees and Digital Twins")]
+        D3[("D3: Attendance and Punch Events")]
+        D4[("D4: Exceptions and Document Vault")]
+        D5[("D5: Leave Ledgers and Quotas")]
+        D6[("D6: Vector Embeddings and Policies")]
         D7[("D7: Immutable Audit Logs")]
-        D8[("D8: Redis Cache & Locks")]
+        D8[("D8: Redis Cache and Locks")]
     end
 
-    EMP -->|Activation Token| P1
-    P1 -->|Store User Profile| D1
-    P1 -->|Register Employee Record| D2
-    HR -->|Approve Provisioning| P1
+    EMP -->|"Activation Token"| P1
+    P1 -->|"Store User Profile"| D1
+    P1 -->|"Register Employee Record"| D2
+    HR -->|"Approve Provisioning"| P1
 
-    EMP & HR -->|Credentials & MFA Code| P2
-    P2 <-->|Validate Argon2id Hash & TOTP| D1
-    P2 -->|Session State & Slotted Limits| D8
-    P2 -->|Emit Login Events| P7
+    EMP & HR -->|"Credentials and MFA Code"| P2
+    P2 <-->|"Validate Argon2id Hash and TOTP"| D1
+    P2 -->|"Session State and Slotted Limits"| D8
+    P2 -->|"Emit Login Events"| P7
 
-    EMP -->|Check-In / Out Timestamps| P3
-    P3 <-->|Active Schedules & Holiday Rules| D2
-    P3 -->|Write Punch Log| D3
-    P3 -->|Trigger Late Flag| P4
+    EMP -->|"Check-In / Out Timestamps"| P3
+    P3 <-->|"Active Schedules and Holiday Rules"| D2
+    P3 -->|"Write Punch Log"| D3
+    P3 -->|"Trigger Late Flag"| P4
 
-    EMP -->|Submit Explanation & Proof| P4
-    P4 <-->|Store Document in GridFS| D4
-    P4 -->|Request AI Risk Classification| P6
-    HR -->|Adjudicate Overrides| P4
+    EMP -->|"Submit Explanation and Proof"| P4
+    P4 <-->|"Store Document in GridFS"| D4
+    P4 -->|"Request AI Risk Classification"| P6
+    HR -->|"Adjudicate Overrides"| P4
 
-    EMP -->|Request Leave| P5
-    HR -->|Approve / Reject Leave| P5
-    P5 <-->|Deduct Balance / Update Quota| D5
+    EMP -->|"Request Leave"| P5
+    HR -->|"Approve / Reject Leave"| P5
+    P5 <-->|"Deduct Balance / Update Quota"| D5
 
-    EMP -->|Policy Query| P6
-    P6 <-->|Cosine Similarity Search| D6
+    EMP -->|"Policy Query"| P6
+    P6 <-->|"Cosine Similarity Search"| D6
 
-    P1 & P2 & P3 & P4 & P5 & P6 -->|Tamper-Evident Signatures| P7
-    P7 -->|Append-Only Write| D7
+    P1 & P2 & P3 & P4 & P5 & P6 -->|"Tamper-Evident Signatures"| P7
+    P7 -->|"Append-Only Write"| D7
 ```
 
 ---
@@ -240,28 +240,28 @@ Detailed data flow of employee provisioning, daily punch calculations, and excep
 
 ```mermaid
 flowchart TD
-    subgraph RegistrationFlow [2.1 Employee Provisioning Flow]
-        R1[Submit Registration Form] --> R2{Validate Corporate Email}
-        R2 -->|Valid| R3[Create INACTIVE Employee Record]
-        R3 --> R4[Dispatch HR Notification]
-        R4 --> R5{HR Identity Verification}
-        R5 -->|Approved| R6[Generate One-Time Activation Link]
-        R5 -->|Rejected| R7[Mark REJECTED with Reason]
-        R6 --> R8[Employee Sets Password & TOTP MFA]
-        R8 --> R9[Activate Account to ACTIVE]
+    subgraph RegistrationFlow ["2.1 Employee Provisioning Flow"]
+        R1["Submit Registration Form"] --> R2{"Validate Corporate Email"}
+        R2 -->|"Valid"| R3["Create INACTIVE Employee Record"]
+        R3 --> R4["Dispatch HR Notification"]
+        R4 --> R5{"HR Identity Verification"}
+        R5 -->|"Approved"| R6["Generate One-Time Activation Link"]
+        R5 -->|"Rejected"| R7["Mark REJECTED with Reason"]
+        R6 --> R8["Employee Sets Password and TOTP MFA"]
+        R8 --> R9["Activate Account to ACTIVE"]
     end
 
-    subgraph AttendanceFlow [2.2 Attendance Time-Accounting Flow]
-        A1[Punch Event Received] --> A2{Token Verified?}
-        A2 -->|No| A3[Return 401 Unauthorized]
-        A2 -->|Yes| A4[Fetch Assigned Work Schedule]
-        A4 --> A5{Shift Type & Grace Period Check}
-        A5 -->|Within 15 Min Grace| A6[Mark PRESENT - Normal]
-        A5 -->|Beyond Grace Period| A7[Mark LATE - Flag Exception]
-        A5 -->|Half Day Rule Met| A8[Mark HALF_DAY]
-        A6 & A7 & A8 --> A9[Compute Net Working Hours & Break Deductions]
-        A9 --> A10[Save Immutable Attendance Record]
-        A10 --> A11[Invalidate Redis User Dashboard Cache]
+    subgraph AttendanceFlow ["2.2 Attendance Time-Accounting Flow"]
+        A1["Punch Event Received"] --> A2{"Token Verified?"}
+        A2 -->|"No"| A3["Return 401 Unauthorized"]
+        A2 -->|"Yes"| A4["Fetch Assigned Work Schedule"]
+        A4 --> A5{"Shift Type and Grace Period Check"}
+        A5 -->|"Within 15 Min Grace"| A6["Mark PRESENT - Normal"]
+        A5 -->|"Beyond Grace Period"| A7["Mark LATE - Flag Exception"]
+        A5 -->|"Half Day Rule Met"| A8["Mark HALF_DAY"]
+        A6 & A7 & A8 --> A9["Compute Net Working Hours and Break Deductions"]
+        A9 --> A10["Save Immutable Attendance Record"]
+        A10 --> A11["Invalidate Redis User Dashboard Cache"]
     end
 ```
 
@@ -489,51 +489,51 @@ Illustrates software module packaging and communication boundaries across the fu
 
 ```mermaid
 flowchart TD
-    subgraph ClientTier [Frontend Presentation Layer]
-        subgraph EmpApp [Employee Application - Port 5173]
-            E_Auth[Auth & MFA Components]
-            E_Dash[Daily Punch Terminal]
-            E_Hist[Attendance Calendar]
-            E_Leave[Leave Balance Tracker]
-            E_AI[RAG Floating Copilot]
+    subgraph ClientTier ["Frontend Presentation Layer"]
+        subgraph EmpApp ["Employee Application - Port 5173"]
+            E_Auth["Auth & MFA Components"]
+            E_Dash["Daily Punch Terminal"]
+            E_Hist["Attendance Calendar"]
+            E_Leave["Leave Balance Tracker"]
+            E_AI["RAG Floating Copilot"]
         end
 
-        subgraph HRApp [HR Admin Console - Port 5174]
-            H_Auth[HR Privileged Login]
-            H_Dash[Workforce Telemetry Grid]
-            H_Dir[Employee Master Directory]
-            H_Queue[Exception Adjudication Queue]
-            H_Audit[Security Audit Stream]
-            H_Cache[Upstash Cache Controls]
+        subgraph HRApp ["HR Admin Console - Port 5174"]
+            H_Auth["HR Privileged Login"]
+            H_Dash["Workforce Telemetry Grid"]
+            H_Dir["Employee Master Directory"]
+            H_Queue["Exception Adjudication Queue"]
+            H_Audit["Security Audit Stream"]
+            H_Cache["Upstash Cache Controls"]
         end
     end
 
-    subgraph GatewayTier [API Gateway & Middleware Layer]
-        ROUTER[Express Router]
-        HELMET[Helmet Security Headers]
-        CORS[Dynamic CORS Interceptor]
-        LIMITER[Redis Distributed Rate Limiter]
-        AUTH_MID[JWT / RBAC Middleware]
+    subgraph GatewayTier ["API Gateway and Middleware Layer"]
+        ROUTER["Express Router"]
+        HELMET["Helmet Security Headers"]
+        CORS["Dynamic CORS Interceptor"]
+        LIMITER["Redis Distributed Rate Limiter"]
+        AUTH_MID["JWT / RBAC Middleware"]
     end
 
-    subgraph ServiceTier [Domain Service Layer]
-        AUTH_SVC[Authentication & TOTP Service]
-        ATT_SVC[Attendance Time Engine]
-        HR_SVC[HR Operations Service]
-        RAG_SVC[LangGraph RAG Orchestrator]
-        AUDIT_SVC[Immutable Audit Service]
+    subgraph ServiceTier ["Domain Service Layer"]
+        AUTH_SVC["Authentication & TOTP Service"]
+        ATT_SVC["Attendance Time Engine"]
+        HR_SVC["HR Operations Service"]
+        RAG_SVC["LangGraph RAG Orchestrator"]
+        AUDIT_SVC["Immutable Audit Service"]
     end
 
-    subgraph DataTier [Storage & External Compute]
-        MONGO_DB[(MongoDB Atlas Operational)]
-        VECTOR_DB[(MongoDB Atlas Vector Search)]
-        GRID_FS[(GridFS Chunked Vault)]
-        REDIS_STORE[(Upstash Redis Cache)]
-        GROQ_LLM[Groq Cloud LLM API]
+    subgraph DataTier ["Storage and External Compute"]
+        MONGO_DB[("MongoDB Atlas Operational")]
+        VECTOR_DB[("MongoDB Atlas Vector Search")]
+        GRID_FS[("GridFS Chunked Vault")]
+        REDIS_STORE[("Upstash Redis Cache")]
+        GROQ_LLM["Groq Cloud LLM API"]
     end
 
-    EmpApp -->|REST / JSON| ROUTER
-    HRApp -->|REST / JSON| ROUTER
+    EmpApp -->|"REST / JSON"| ROUTER
+    HRApp -->|"REST / JSON"| ROUTER
 
     ROUTER --> HELMET --> CORS --> LIMITER --> AUTH_MID
     AUTH_MID --> AUTH_SVC
@@ -560,17 +560,17 @@ flowchart TD
 
 ```mermaid
 flowchart TB
-    subgraph UserLayer [End Users]
-        U1["Employees (Any Device)"]
-        U2["HR Managers & Officers"]
+    subgraph UserLayer ["End Users"]
+        U1["Employees - Any Device"]
+        U2["HR Managers and Compliance Officers"]
     end
 
-    subgraph FrontendLayer [Edge Presentation Tier (Vercel CDN)]
+    subgraph FrontendLayer ["Edge Presentation Tier - Vercel CDN"]
         F1["Employee Portal SPA<br/>Vite / React 18 / Tailwind"]
         F2["HR Dashboard SPA<br/>Vite / React 18 / Recharts"]
     end
 
-    subgraph GatewayLayer [API Gateway Tier (Render Linux)]
+    subgraph GatewayLayer ["API Gateway Tier - Render Linux"]
         GW["Express.js Reverse Proxy & Gateway"]
         MW1["CORS Whitelist Validator"]
         MW2["Sliding-Window Rate Limiter"]
@@ -578,7 +578,7 @@ flowchart TB
         MW4["JWT Access Token Guard"]
     end
 
-    subgraph CoreApplicationLayer [Micro-Domain Services]
+    subgraph CoreApplicationLayer ["Micro-Domain Services"]
         S1["Identity & MFA Service"]
         S2["Time-Accounting Engine"]
         S3["Exception Management"]
@@ -586,22 +586,22 @@ flowchart TB
         S5["Compliance Audit Logger"]
     end
 
-    subgraph AgenticAILayer [Agentic RAG Engine]
+    subgraph AgenticAILayer ["Agentic RAG Engine"]
         LG["LangGraph State Machine Graph"]
         EMB["Hugging Face MiniLM Embeddings"]
         GROQ_INF["Groq Llama 3.3 70B Fast Engine"]
     end
 
-    subgraph StorageLayer [Distributed Data Tier]
+    subgraph StorageLayer ["Distributed Data Tier"]
         M1[("MongoDB Atlas<br/>Master Documents")]
         M2[("MongoDB Atlas<br/>Vector Search Index")]
         M3[("GridFS<br/>Encrypted Blob Storage")]
         R1[("Upstash Redis<br/>TLS Key-Value Store")]
     end
 
-    U1 -->|HTTPS| F1
-    U2 -->|HTTPS| F2
-    F1 & F2 -->|REST APIs| GW
+    U1 -->|"HTTPS"| F1
+    U2 -->|"HTTPS"| F2
+    F1 & F2 -->|"REST APIs"| GW
 
     GW --> MW1 --> MW2 --> MW3 --> MW4
     MW4 --> S1 & S2 & S3 & S4 & S5
@@ -628,39 +628,39 @@ Illustrates physical cloud hosting topology, TLS encryption, and secure cross-cl
 
 ```mermaid
 flowchart TB
-    subgraph CloudVercel [Vercel Global Edge Network]
-        V1["Vercel Edge Node (iad1)"]
+    subgraph CloudVercel ["Vercel Global Edge Network"]
+        V1["Vercel Edge Node - iad1"]
         V1_FE["inner-eye-attendance-system-fronten-iota.vercel.app"]
         V1_HR["inner-eye-attendance-system-hr-dash.vercel.app"]
     end
 
-    subgraph CloudRender [Render Cloud Platform - US East]
-        R_SVC["Web Service Instance (Node.js 20 LTS)"]
+    subgraph CloudRender ["Render Cloud Platform - US East"]
+        R_SVC["Web Service Instance - Node.js 20 LTS"]
         R_APP["inner-eye-attendance-system.onrender.com"]
         R_ENV["Environment Secret Vault"]
     end
 
-    subgraph CloudMongo [MongoDB Atlas Cloud - AWS us-east-1]
-        M_INST["Replica Set Cluster (M0 / Production)"]
-        M_DATA["Operational Database: 'InnerEye'"]
-        M_VEC["Vector Search Engine: 'default'"]
-        M_BLOB["GridFS Buckets: 'documents.files'"]
+    subgraph CloudMongo ["MongoDB Atlas Cloud - AWS us-east-1"]
+        M_INST["Replica Set Cluster - M0 Production"]
+        M_DATA["Operational Database: InnerEye"]
+        M_VEC["Vector Search Engine: default"]
+        M_BLOB["GridFS Buckets: documents.files"]
     end
 
-    subgraph CloudUpstash [Upstash Serverless Platform]
+    subgraph CloudUpstash ["Upstash Serverless Platform"]
         UP_REDIS["Redis TLS Endpoint: epic-llama-203106.upstash.io:6379"]
     end
 
-    subgraph CloudAIProviders [AI Cloud Compute Providers]
+    subgraph CloudAIProviders ["AI Cloud Compute Providers"]
         GROQ_API["Groq Cloud LPU Inference API"]
         HF_API["Hugging Face Inference Gateway"]
     end
 
-    V1_FE & V1_HR -->|TLS 1.3 / HTTPS| R_APP
-    R_APP -->|Encrypted MongoDB Wire Protocol (TLS)| M_INST
-    R_APP -->|TLS / rediss://| UP_REDIS
-    R_APP -->|HTTPS REST| GROQ_API
-    R_APP -->|HTTPS REST| HF_API
+    V1_FE & V1_HR -->|"TLS 1.3 / HTTPS"| R_APP
+    R_APP -->|"Encrypted MongoDB Wire Protocol TLS"| M_INST
+    R_APP -->|"TLS rediss://"| UP_REDIS
+    R_APP -->|"HTTPS REST"| GROQ_API
+    R_APP -->|"HTTPS REST"| HF_API
 ```
 
 ---
@@ -673,36 +673,36 @@ Detailed decision flow for employee arrival, punctuality checks, grace calculati
 
 ```mermaid
 flowchart TD
-    START([Start Working Day]) --> LOGIN[Employee Logs In]
-    LOGIN --> CHECK_PUNCH{Has Employee Checked In Today?}
+    START(["Start Working Day"]) --> LOGIN["Employee Logs In"]
+    LOGIN --> CHECK_PUNCH{"Has Employee Checked In Today?"}
     
-    CHECK_PUNCH -->|Yes| SHOW_STATUS[Display Active Session Timer & Check-Out Button]
-    CHECK_PUNCH -->|No| DO_PUNCH[Press 'Clock In Now']
+    CHECK_PUNCH -->|"Yes"| SHOW_STATUS["Display Active Session Timer & Check-Out Button"]
+    CHECK_PUNCH -->|"No"| DO_PUNCH["Press 'Clock In Now'"]
 
-    DO_PUNCH --> TIME_REC[Capture Server Timestamp]
-    TIME_REC --> SHIFT_COMP{Compare with Shift Start}
+    DO_PUNCH --> TIME_REC["Capture Server Timestamp"]
+    TIME_REC --> SHIFT_COMP{"Compare with Shift Start"}
 
-    SHIFT_COMP -->|Arrival <= Shift Start + 15 min| MARK_PRESENT[Status: PRESENT]
-    SHIFT_COMP -->|Arrival > Shift Start + 15 min| MARK_LATE[Status: LATE]
+    SHIFT_COMP -->|"Arrival <= Shift Start + 15 min"| MARK_PRESENT["Status: PRESENT"]
+    SHIFT_COMP -->|"Arrival > Shift Start + 15 min"| MARK_LATE["Status: LATE"]
 
-    MARK_PRESENT --> SESSION_ACTIVE[Session Active]
-    MARK_LATE --> PROMPT_REASON[Flag Exception: Ask for Late Reason]
+    MARK_PRESENT --> SESSION_ACTIVE["Session Active"]
+    MARK_LATE --> PROMPT_REASON["Flag Exception: Ask for Late Reason"]
 
-    PROMPT_REASON --> UPLOAD_OPT{Upload Proof Document?}
-    UPLOAD_OPT -->|Yes| UPLOAD_DOC[Upload PDF / Image to GridFS]
-    UPLOAD_OPT -->|No| SUBMIT_TEXT[Submit Written Explanation]
+    PROMPT_REASON --> UPLOAD_OPT{"Upload Proof Document?"}
+    UPLOAD_OPT -->|"Yes"| UPLOAD_DOC["Upload PDF / Image to GridFS"]
+    UPLOAD_OPT -->|"No"| SUBMIT_TEXT["Submit Written Explanation"]
     UPLOAD_DOC --> AI_EVAL
-    SUBMIT_TEXT --> AI_EVAL[LangGraph Evaluates Reason & Classifies Risk]
+    SUBMIT_TEXT --> AI_EVAL["LangGraph Evaluates Reason & Classifies Risk"]
 
-    AI_EVAL --> HR_QUEUE[Push to HR Exception Queue]
-    HR_QUEUE --> HR_DECISION{HR Decision}
+    AI_EVAL --> HR_QUEUE["Push to HR Exception Queue"]
+    HR_QUEUE --> HR_DECISION{"HR Decision"}
 
-    HR_DECISION -->|Approved| OVERRIDE_PRESENT[Penalty Waived / Approved]
-    HR_DECISION -->|Rejected| PENALTY_LEAVE[Deduct Half-Day Leave or Log Penalty]
+    HR_DECISION -->|"Approved"| OVERRIDE_PRESENT["Penalty Waived / Approved"]
+    HR_DECISION -->|"Rejected"| PENALTY_LEAVE["Deduct Half-Day Leave or Log Penalty"]
 
-    SESSION_ACTIVE --> CLOCK_OUT[Employee Presses 'Clock Out']
-    CLOCK_OUT --> COMPUTE_HOURS[Compute Total & Effective Working Hours]
-    COMPUTE_HOURS --> END([End Working Session])
+    SESSION_ACTIVE --> CLOCK_OUT["Employee Presses 'Clock Out'"]
+    CLOCK_OUT --> COMPUTE_HOURS["Compute Total & Effective Working Hours"]
+    COMPUTE_HOURS --> END(["End Working Session"])
     OVERRIDE_PRESENT --> SESSION_ACTIVE
     PENALTY_LEAVE --> SESSION_ACTIVE
 ```
@@ -717,19 +717,19 @@ State machine governing attendance daily records and exception adjudication tran
 stateDiagram-v2
     [*] --> NOT_RECORDED : Start of Day
 
-    NOT_RECORDED --> PRESENT : Clock In (<= 15 min Grace)
-    NOT_RECORDED --> LATE : Clock In (> 15 min Grace)
+    NOT_RECORDED --> PRESENT : Clock In within 15 min Grace
+    NOT_RECORDED --> LATE : Clock In beyond 15 min Grace
     NOT_RECORDED --> ON_LEAVE : Approved Leave Exists
     NOT_RECORDED --> ABSENT : No Clock-In by Shift Close
 
-    PRESENT --> SESSION_COMPLETED : Clock Out (>= Required Hours)
-    PRESENT --> HALF_DAY : Clock Out (< Required Hours)
+    PRESENT --> SESSION_COMPLETED : Clock Out with Required Hours Met
+    PRESENT --> HALF_DAY : Clock Out with Partial Hours
 
     LATE --> EXCEPTION_PENDING : Lateness Detected
     EXCEPTION_PENDING --> UNDER_REVIEW : Explanation Submitted
     
-    UNDER_REVIEW --> APPROVED : HR Approves (Penalty Waived)
-    UNDER_REVIEW --> REJECTED : HR Rejects (Deduction Enforced)
+    UNDER_REVIEW --> APPROVED : HR Approves - Penalty Waived
+    UNDER_REVIEW --> REJECTED : HR Rejects - Deduction Enforced
 
     APPROVED --> SESSION_COMPLETED : Clock Out Recorded
     REJECTED --> HALF_DAY : Penalty Converted
@@ -866,29 +866,29 @@ Autonomous state graph pipeline executing intent classification, dense retrieval
 
 ```mermaid
 flowchart TD
-    QUERY[User Query / Late Explanation] --> INGEST[State Initialization & Sanitization]
-    INGEST --> INTENT{Intent Classifier Node}
+    QUERY["User Query / Late Explanation"] --> INGEST["State Initialization & Sanitization"]
+    INGEST --> INTENT{"Intent Classifier Node"}
 
-    INTENT -->|Policy Q&A| EMBED[Generate Dense Query Embedding via MiniLM]
-    INTENT -->|Late Reason Classification| CLASSIFY[Contextualize Attendance Record & Schedule]
+    INTENT -->|"Policy Q&A"| EMBED["Generate Dense Query Embedding via MiniLM"]
+    INTENT -->|"Late Reason Classification"| CLASSIFY["Contextualize Attendance Record & Schedule"]
 
-    EMBED --> VEC_SEARCH[MongoDB Atlas Vector Search]
-    VEC_SEARCH --> TOP_K[Retrieve Top-K Chunks]
+    EMBED --> VEC_SEARCH["MongoDB Atlas Vector Search"]
+    VEC_SEARCH --> TOP_K["Retrieve Top-K Chunks"]
 
-    TOP_K --> DOC_GRADER{Document Relevance Grader Node}
-    DOC_GRADER -->|Relevant >= 0.70| SYNTHESIS[RAG Synthesis Node via Groq LLM]
-    DOC_GRADER -->|Irrelevant < 0.70| FALLBACK[Fallback to Standard Corporate FAQ Node]
+    TOP_K --> DOC_GRADER{"Document Relevance Grader Node"}
+    DOC_GRADER -->|"Relevant >= 0.70"| SYNTHESIS["RAG Synthesis Node via Groq LLM"]
+    DOC_GRADER -->|"Irrelevant < 0.70"| FALLBACK["Fallback to Standard Corporate FAQ Node"]
 
-    CLASSIFY --> POLICY_COMPARE[Compare Reason Against Transit/Medical Rules]
-    POLICY_COMPARE --> RISK_SCORER[Compute Policy Risk & Confidence Score]
+    CLASSIFY --> POLICY_COMPARE["Compare Reason Against Transit/Medical Rules"]
+    POLICY_COMPARE --> RISK_SCORER["Compute Policy Risk & Confidence Score"]
 
-    SYNTHESIS --> CITATIONS[Append Source Policy File & Section Citations]
+    SYNTHESIS --> CITATIONS["Append Source Policy File & Section Citations"]
     FALLBACK --> CITATIONS
-    RISK_SCORER --> JSON_OUTPUT[Format Structured Advisory JSON Payload]
+    RISK_SCORER --> JSON_OUTPUT["Format Structured Advisory JSON Payload"]
 
-    CITATIONS --> OUTPUT_GUARD[Deterministic Safety & Guardrail Filter]
+    CITATIONS --> OUTPUT_GUARD["Deterministic Safety & Guardrail Filter"]
     JSON_OUTPUT --> OUTPUT_GUARD
-    OUTPUT_GUARD --> FINAL_RESPONSE[Return Structured AI Response]
+    OUTPUT_GUARD --> FINAL_RESPONSE["Return Structured AI Response"]
 ```
 
 ---
@@ -899,27 +899,27 @@ Predictive modeling engine tracking employee attendance patterns, punctuality dr
 
 ```mermaid
 flowchart LR
-    subgraph DataSources [Raw Telemetry Ingestion]
-        D_ATT["Daily Punch Times<br/>(90-Day Sliding Window)"]
+    subgraph DataSources ["Raw Telemetry Ingestion"]
+        D_ATT["Daily Punch Times<br/>90-Day Sliding Window"]
         D_LATE["Late Occurrences & Reasons"]
         D_LEAVE["Leave Patterns & Frequency"]
         D_HOURS["Net Working Session Hours"]
     end
 
-    subgraph FeatureEngineering [Feature Pipeline]
-        FE_PUNC["Punctuality Index (0 - 100)"]
+    subgraph FeatureEngineering ["Feature Pipeline"]
+        FE_PUNC["Punctuality Index: 0 to 100"]
         FE_STAB["Session Stability Index"]
         FE_BURNOUT["Overtime Fatigue Indicator"]
         FE_ANOMALY["Anomaly Drift Detector"]
     end
 
-    subgraph DigitalTwin [Employee Digital Twin State]
+    subgraph DigitalTwin ["Employee Digital Twin State"]
         DT_MODEL["Digital Twin Persona Entity"]
         DT_FORECAST["7-Day Attendance Forecast"]
-        DT_RISK["Compliance Risk Tier (LOW / MED / HIGH)"]
+        DT_RISK["Compliance Risk Tier: LOW / MED / HIGH"]
     end
 
-    subgraph ActionableOutputs [Operational Insights]
+    subgraph ActionableOutputs ["Operational Insights"]
         OUT_EMP["Personalized Employee Recommendations"]
         OUT_HR["HR Predictive Burnout / Absence Alert"]
     end
@@ -937,36 +937,36 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    subgraph PerimeterDefense [Layer 1: Perimeter & Transport Defense]
+    subgraph PerimeterDefense ["Layer 1: Perimeter and Transport Defense"]
         HTTPS["TLS 1.3 / Strict HTTPS"]
-        HELMET_SEC["Helmet (HSTS, CSP, XSS Filter, Frameguard)"]
+        HELMET_SEC["Helmet: HSTS, CSP, XSS Filter, Frameguard"]
         CORS_SEC["Strict CORS Origin Validation"]
         RATE_SEC["Upstash Redis Sliding-Window Rate Limiter"]
     end
 
-    subgraph IdentityLayer [Layer 2: Identity & Authentication Governance]
-        ARGON2["Argon2id Hash (m=65536, t=3, p=4)"]
+    subgraph IdentityLayer ["Layer 2: Identity and Authentication Governance"]
+        ARGON2["Argon2id Hash: m=65536, t=3, p=4"]
         TOTP_MFA["RFC 6238 TOTP Multi-Factor Authentication"]
-        JWT_TOKENS["JOSE JWT Access Tokens (15 min Short-Lived)"]
+        JWT_TOKENS["JOSE JWT Access Tokens: 15 min Short-Lived"]
         REFRESH_ROT["HttpOnly Secure Cookie Refresh Rotation"]
-        LOCKOUT["Brute-Force Account Lockout (5 Attempts / 15 min)"]
+        LOCKOUT["Brute-Force Account Lockout: 5 Attempts / 15 min"]
     end
 
-    subgraph AccessControl [Layer 3: Authorization & Access Control (RBAC)]
+    subgraph AccessControl ["Layer 3: Authorization and Access Control RBAC"]
         ROLE_EMP["EMPLOYEE Role Guard"]
         ROLE_HR["HR_ADMIN Privileged Role Guard"]
         RESOURCE_GUARD["Resource-Level Ownership Verification"]
     end
 
-    subgraph DataProtection [Layer 4: Data Security & Document Hygiene]
+    subgraph DataProtection ["Layer 4: Data Security and Document Hygiene"]
         INPUT_ZOD["Zod Strict Schema Parsing & Whitelisting"]
         FILE_MAGIC["Magic Byte MIME Inspection & 10MB Limit"]
         MALWARE_SCAN["Anti-Malware Sandbox & ClamAV Stream Check"]
         GRIDFS_ENC["Encrypted GridFS Chunked Storage"]
     end
 
-    subgraph ComplianceAudit [Layer 5: Compliance & Security Telemetry]
-        IMMUTABLE_LOG["Append-Only Audit Trail (Actor, IP, Action, Hash)"]
+    subgraph ComplianceAudit ["Layer 5: Compliance and Security Telemetry"]
+        IMMUTABLE_LOG["Append-Only Audit Trail: Actor, IP, Action, Hash"]
         REDIS_PURGE["Live Admin Redis Cache Flush Engine"]
     end
 
